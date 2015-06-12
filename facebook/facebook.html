@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Facebook</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<script type="text/javascript">
+			var count = 0;
+			function Clicar() {
+				count += 1;
+				document.getElementById("count").innerHTML = count;
+			};
+			
+			
+			
+			function Comentario() {
+				var tableBody = document.getElementById("Body");
+				
+				var row = tableBody.appendChild(document.createElement("tr"));
+				var col = tableBody.appendChild(document.createElement("td"));
+				var meuText = String(document.getElementById('message').value);
+
+				
+				col.appendChild(document.createElement("td"))
+				.appendChild(document.createTextNode(meuText));
+				//col.style.setProperty("background-color", "lightgray");
+				col.className = "ic2";
+				
+			};
+		
+			
+		</script>
+	
+		<style>
+		
+		.ic2{
+		
+		background-color: #E6E6FA;
+		}
+		
+		#chamar{
+		width: 100%;
+		}
+		
+		</style>
+
+		
+    </head>
+    <body>
+	
+		<table>
+		<tr>
+		<td><img src="wesley.jpg" alt="Wesley" height="100" width="100"></td>
+		<td><h3>Wesley Safadão</h3></td>
+		</tr>
+		</table>
+		
+		<p>Sabe a diferença entre a escola e a vida? Na escola você aprende uma lição e logo te dão a prova.<br> Na vida primeiro você é posto à prova e depois aprende a lição. QQQQQ.</br> </p>
+		
+	
+		<table>
+		<tr>
+		<td><p><a id="count">0</a> people like this.</p></td>
+		<td><button type="button" onClick="Clicar()">Like</button></td>
+		</tr>
+		</table>
+			
+			
+			
+		<table border="0" id="chamar">
+		<tbody id="Body">
+		
+		</tbody>
+		</table>
+		<br>
+		<b>Deixe seu comentário</b>
+		<br>
+		<textarea id="message" name="message" rows="4" cols="50"></textarea>
+		<button type="button" id="add" onClick="Comentario()">Comment</button>
+		<br>
+		
+		
+		
+		
+        </body>
+</html>
