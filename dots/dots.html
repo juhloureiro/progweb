@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+    <Html>  
+        <head>
+            <style type="text/css">
+    body{
+		background: url(sky.jpg) no-repeat 50% 0%;
+	}
+	
+	.painel{
+		border: 10px solid;
+		width: 700px;
+		border-radius: 14px 0px 14px 14px;
+		border-color: #4B0082 ;
+		background-color: white;
+		
+		padding-top: 30px;
+		padding-bottom: 30px;
+		padding-right: 30px;
+		padding-left: 30px;
+		margin-top: -40px;
+	
+	}
+	
+	.pontos{
+	
+		border: 10px solid;
+		width: 240px;
+		border-radius: 0px 14px 14px 0px;
+		border-color: #4B0082 ;
+		background-color: white;
+		
+		position: relative;
+		top: -344px;
+		left: 1050px;
+		padding-top: 5px;
+		padding-bottom: 30px;
+		
+		padding-left: 10px;
+		
+		
+		opacity: 0.8;
+		box-shadow: 10px 10px 5px black;
+	
+	
+		}
+	
+				
+	td{
+			*border: 3px solid black;
+		}
+	
+	.h0 {
+			background-image: url('h0.gif');
+		}
+
+	.fora {
+			background-image: url('notsel.gif');
+		}
+
+	.h1 {
+			background-image: url('h1.gif');
+		}
+
+	.p1{
+			background-image: url('p1.gif');
+		}
+		
+	.p2{
+			background-image: url('p2.gif');
+		}
+
+	.dot{
+			background: url('d.gif') center;
+			min-width: 3px;
+			min-height: 3px;
+			width: 3px;
+			height: 3px;
+		}
+		
+
+	.clear{
+			background: transparent url('clear.gif') center;
+			*border-radius: 7px;
+			min-width: 40px;
+			min-height: 40px;  
+			width: 40px;
+			height: 40px;  
+		}
+            </style>  
+            <script type="text/javascript"> 
+		window.onload =	function() { document.getElementById('game').style.visibility = 'hidden' };
+		
+	
+		function Jogador(nome) {
+			this.nome = nome;	
+		}
+		
+		
+		function initGame() {
+			var nomeJogador1 = document.getElementById('jogador1').value;
+			var nomeJogador2 = document.getElementById('jogador2').value;
+			jogador1 = new Jogador(nomeJogador1); 
+			jogador2 = new Jogador(nomeJogador2); 
+		
+ 
+			jogadorAtual = jogador1;
+			setLabelJogadorAtual();
+ 
+ 
+			//depois de definir os jogadores, exibe a div-game e inicia o jogo
+			document.getElementById('game').style.visibility = 'visible';
+			
+		}
+
+
+ 
+		/*Reinicia a partida*/
+		function reset(){ 
+		window.location.reload(); 
+		}
+		
+		/*Seta o nome do jogador da rodada na página HTML*/
+		function setLabelJogadorAtual(){
+			document.getElementById('jogadorAtual').innerHTML = 'Jogador Atual:  ' + jogadorAtual.nome;
+		}
+
+		function setLabelC1(){
+			document.getElementById('comp').innerHTML = 'Jogador 1:  ' + c1;
+		}
+		
+		function setLabelC2(){
+			document.getElementById('plyr').innerHTML = 'Jogador 2:  ' + c2;
+		}
+        
+		function tableText(tableCell) {
+                    var urlString = 'url(p1.gif)';
+					var urlString2 = 'url(p2.gif)';
+					
+					if(jogadorAtual.nome == jogador1.nome){
+                        tableCell.style.backgroundImage = urlString;
+					} else if(jogadorAtual.nome == jogador2.nome){
+						tableCell.style.backgroundImage = urlString2;
+					}
+					
+                }
+
+		var c1 = 0;		
+		var c2 = 0;
+        function verifica(table){
+                for (var i = 0; i < table.rows.length; i++) {
+                        for (var j = 0; j < table.rows[i].cells.length; j++){
+                            var id = table.rows[i].cells[j].id.substring(0, 3);
+                            if(table.rows[i].cells[j].className == "clear"){
+
+                                var valida=0;
+                                var elemento;
+
+                                var result = table.rows[i].cells[j].id.split(";");
+
+                                var linha = result[0];
+                                var id = result[1];
+                                console.log("linha: "+linha+" curId: "+id);
+
+                                linha--;
+                                console.log("checa: "+linha+";"+id);
+
+                                elemento = document.getElementById(linha+";"+id);
+                                if(elemento.className == "h1"){
+                                    valida++;
+                                }
+
+                                
+                                linha = result[0];
+                                id = result[1];
+                                id--;
+                                console.log("checa: "+linha+";"+id);
+                                elemento = document.getElementById(linha+";"+id);
+                                if(elemento.className == "h1"){
+                                    valida++;
+                                }
+
+                                linha = result[0];
+                                id = result[1];
+                                id++;
+                                console.log("checa: "+linha+";"+id);
+                                elemento = document.getElementById(linha+";"+id);
+                                if(elemento.className == "h1"){
+                                    valida++;
+                                }
+
+                                linha = result[0];
+                                id = result[1];
+                                linha++;
+                                console.log("checa: "+linha+";"+id);
+                                elemento = document.getElementById(linha+";"+id);
+                                if(elemento.className == "h1"){
+                                    valida++;
+                                }
+
+                                console.log("valida: "+valida);
+                                
+                                if(valida==4){
+								if(jogadorAtual.nome == jogador1.nome){
+                                    table.rows[i].cells[j].className = "p1";
+									jogadorAtual = jogador2;
+									c1++;
+									setLabelC1();
+									setLabelJogadorAtual();
+									 } else if(jogadorAtual.nome == jogador2.nome){
+									table.rows[i].cells[j].className = "p2";
+									jogadorAtual = jogador1;
+									c2++;
+									setLabelC2();
+									setLabelJogadorAtual();
+									 }
+                                    //}
+                                }
+                            }
+
+                        }
+                    }
+
+            }
+
+            function novaLinha(){
+
+                
+                var linhaImpar=[];
+                var linhaPar=[];
+                var x;
+                var i;
+
+                var linha=0;
+                var id=0;
+              
+                var tamanho = 10;
+                
+
+                if(tamanho%2==0){
+                    tamanho++;
+                }
+                var fim = tamanho;
+                var linhas = tamanho;
+
+                for (i=0;i<linhas;i++){
+                    if(i%2==0){
+                        linhaImpar[0] = "<tr>";
+                        for(x = 1; x <= fim; x++){
+                            if(x % 2 !=0){
+                                linhaImpar[x] = "<td id='"+linha+";"+id+"' class='dot'></td>";
+                            }else{
+                                linhaImpar[x] = "<td id='"+linha+";"+id+"' class='fora'></td>";
+                            }
+                            id++;                 
+                        }
+                        id=0;
+                        linha++;
+
+                        linhaImpar[fim+1] = "</tr>";
+                        var ultimo = linhaImpar.length;
+                        x=0;
+                        var estrutura="";
+                        for (x=0;x<ultimo;x++){
+                            estrutura = estrutura + linhaImpar[x];
+                        }
+
+                        document.getElementById("tabela").innerHTML += estrutura;
+
+                        x=0;
+                        ultimo=0;
+
+                    }else{
+                        linhaPar[0] = "<tr>";
+                        for(x = 1; x <= fim; x++){
+                            if(x % 2 !=0){
+                                linhaPar[x] = "<td id='"+linha+";"+id+"'class='fora'></td>";
+                            }else{
+                                linhaPar[x] = "<td id='"+linha+";"+id+"'class='clear'></td>";
+                            }
+                            id++;               
+                        }
+                        id=0;
+                        linha++;
+
+                        linhaPar[fim+1] = "</tr>";
+                        var ultimo = linhaPar.length;
+                        x=0;
+                        var estrutura="";
+                        for (x=0;x<ultimo;x++){
+                            estrutura = estrutura + linhaPar[x];
+                        }
+
+                        document.getElementById("tabela").innerHTML += estrutura;
+
+                        x=0;
+                        ultimo=0;
+                    }
+                }
+            }             
+
+            </script>  
+        </head>  
+  
+    <body>  
+	<fieldset>
+			<legend style="color: white;"> Jogadores </legend>
+			<label style="color: white;" for="Jogador 1"> Jogador 1: </label>
+			<input type="text" id="jogador1"/>
+			<label style="color: white;" for="Jogador 1"> Jogador 2: </label>
+			<input type="text" id="jogador2"/>
+
+			<input type="button" value="Iniciar" style="margin-top:4px; height:25px; width:150px; font-size:14px" onclick="initGame();"/>
+		</fieldset>
+
+		
+	
+		<div id="game">
+		<center>
+		<h3 style="color: white;" id="jogadorAtual">Jogador Atual: </h3>
+		 
+		<h1 style="color:white">Jogo Square</h1></br></br>
+		
+		<div class="painel">
+		
+		<form name="f">
+	
+
+	
+        <table id="tabela">  
+           
+        </table>  
+		</div>
+		</center>
+
+		<div class="pontos">
+		
+		
+		</br>
+		<label id="comp">Jogador 1:  </label>
+		</br></br>
+		
+		
+		<label id="plyr">Jogador 2:  </label>
+		</br></br>
+		
+		
+		<input type=button value='New Game' onclick="window.location=window.location;">
+		
+
+
+	
+		</div>
+		
+		
+		</form>
+		
+		
+		</div>
+		
+        <script>
+            novaLinha();
+            var table = document.getElementById("tabela");
+                if (table != null) {
+                    for (var i = 0; i < table.rows.length; i++) {
+                        for (var j = 0; j < table.rows[i].cells.length; j++){
+                            table.rows[i].cells[j].onmouseover = function() 
+                            { 
+                                if((this.className!="clear")&&(this.className!="p1"))
+                                {
+                                    if((this.className!="h1")&&(this.className!="dot"))
+                                    {
+									if(jogadorAtual.nome == jogador1.nome){
+                                     this.className = "h0";
+									 jogadorAtual = jogador2;
+									setLabelJogadorAtual();
+									 } else if(jogadorAtual.nome == jogador2.nome){
+									 this.className = "h0";
+									 jogadorAtual = jogador1;
+									setLabelJogadorAtual();
+									 }
+									
+									
+                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (var i = 0; i < table.rows.length; i++) {
+                        for (var j = 0; j < table.rows[i].cells.length; j++){
+                            table.rows[i].cells[j].onmouseout = function() 
+                            { 
+                                if((this.className!="clear")&&(this.className!="p1"))
+                                {
+                                    if((this.className!="h1")&&(this.className!="dot"))
+                                    {
+									if(jogadorAtual.nome == jogador1.nome){
+                                     this.className = "fora";
+									 jogadorAtual = jogador2;
+									setLabelJogadorAtual();
+									 } else if(jogadorAtual.nome == jogador2.nome){
+									 this.className = "fora";
+									 jogadorAtual = jogador1;
+									setLabelJogadorAtual();
+									 }
+                                        
+                                    }     
+                                }
+
+                            }
+                        } 
+                    }
+                    for (var i = 0; i < table.rows.length; i++) {
+                        for (var j = 0; j < table.rows[i].cells.length; j++)
+                            table.rows[i].cells[j].onclick = function() {
+                            { 
+                                if((this.className!="clear")&&(this.className!="p1"))
+                                {
+                                    if((this.className!="h1")&&(this.className!="dot"))
+                                    {
+									if(jogadorAtual.nome == jogador1.nome){
+                                       this.className = "h1";
+									 jogadorAtual = jogador2;
+									setLabelJogadorAtual();
+									 } else if(jogadorAtual.nome == jogador2.nome){
+								  this.className = "h1";
+									 jogadorAtual = jogador1;
+									setLabelJogadorAtual();
+									 }
+								
+                                      
+									  verifica(table);
+                                    }    
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+        </script>
+    </body>  
+</html>  
